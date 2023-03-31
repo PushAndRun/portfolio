@@ -243,7 +243,7 @@ loader.load(
 	function ( gltf ) {
 
   var model = gltf.scene;
-  var newMaterial = new THREE.MeshStandardMaterial ( {color: scheme.fourth, roughness: 0, transparent: true, opacity: 1});
+  var newMaterial = new THREE.MeshStandardMaterial ( {color: scheme.fourth, roughness: 0, transparent: true, opacity: 0.99});
   model.traverse ( (o) => {
       if (o.isMesh) {
         o.material = newMaterial;
