@@ -44,8 +44,22 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.render(scene, camera);
 
+/*
+renderer.physicallyCorrectLights = true;
+renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.toneMapping = THREE.CineonToneMapping;
+renderer.toneMappingExposure = 1.75;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+*/
+
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
 // Create a loader and its manager
 const manager = new THREE.LoadingManager();
+const textureLoader = new THREE.TextureLoader();
+textureLoader.gammaFactor = 2.2;
 const loader = new GLTFLoader(manager)
       manager.onStart = () => {
         console.log('Loading started');
@@ -66,8 +80,10 @@ const loader = new GLTFLoader(manager)
 
 //Prepare objects for animation
 let moon
+
+// Create an AnimationMixer instance
 const clock = new THREE.Clock()
-let mixer
+const mixer = new THREE.AnimationMixer( scene );
 
 // Prepare Nebula
 const system = new ParticleSystem();
@@ -75,17 +91,17 @@ const emitter = new Emitter();
 
 // Set color scheme
 const scheme2 = {
-main: 0xFFF2CC,
-secondary: 0xFFD966,
-third: 0xF4B183,
-fourth: 0xDFA67B
+main: 0xEEECDA,
+secondary: 0xF08A5D,
+third: 0xB83B5E,
+fourth: 0x6A2C70
 }
 
 const scheme = {
   main: 0xFFF2CC,
   secondary: 0xBB8082,
   third: 0x6E7582,
-  fourth: 0x046582
+  fourth: 0x408E91
   }
 
 function init() {
@@ -137,13 +153,13 @@ var positionValues2 = [ -30, -100, -100, 150, 150, -40 ];
 var positionTrack2 = new THREE.KeyframeTrack('.position', times2 ,positionValues2 ,THREE.InterpolateSmooth);
 
 // set up rotation about x axis
-var xAxis = new THREE.Vector3( 0.3, 0, 0 );
+var xAxis = new THREE.Vector3( 0.5, 0, 0 );
 var qInitial = new THREE.Quaternion().setFromAxisAngle( xAxis, 0 );
 var qFinal = new THREE.Quaternion().setFromAxisAngle( xAxis, Math.PI );
 var quaternionKF2 = new THREE.QuaternionKeyframeTrack( '.quaternion', [ 0, 10, 15 ], [ qInitial.x, qInitial.y, qInitial.z, qInitial.w, qFinal.x, qFinal.y, qFinal.z, qFinal.w, qInitial.x, qInitial.y, qInitial.z, qInitial.w ] );
 
 // Create an animation clip with all the tracks and a name and duration
-var clip2 = new THREE.AnimationClip('satellite', -1 ,[positionTrack2, quaternionKF2]); //,scaleTrack
+var satelliteAnimation = new THREE.AnimationClip('satellite', -1 ,[positionTrack2, quaternionKF2]); //,scaleTrack
 
 // SCALE
 //var scaleKF = new THREE.VectorKeyframeTrack( '.scale', [ 0, 1, 2 ], [ 1, 1, 1, 2, 2, 2, 1, 1, 1 ] );
@@ -163,6 +179,37 @@ var clip2 = new THREE.AnimationClip('satellite', -1 ,[positionTrack2, quaternion
 // If a negative time value is passed, the duration will be calculated from the times of the passed tracks array
 //var clip1 = new THREE.AnimationClip( 'Action', 3, [  positionKF ] ); //add required KFs: quaternionKF, colorKF, opacityKF, scaleKF,
 
+
+// POSITION - attribute, timings, positions (x, y, z)
+//var positionKF = new THREE.VectorKeyframeTrack( '.position', [ 0, 0.5, 2 ], [ 0, 20, -150, 0, 40, -150, 0, 20, -150 ] );
+
+// SCALE
+//var scaleKF = new THREE.VectorKeyframeTrack( '.scale', [ 0, 1, 2 ], [ 1, 1, 1, 2, 2, 2, 1, 1, 1 ] );
+
+// ROTATION
+// Rotation should be performed using quaternions, using a QuaternionKeyframeTrack
+// Interpolating Euler angles (.rotation property) can be problematic and is currently not supported
+
+// set up rotation about x axis
+var times3 = [0];
+var yAxis = new THREE.Vector3( 0, 1, 0 );
+var qInitial2 = new THREE.Quaternion().setFromAxisAngle( yAxis, 0 );
+var qFinal2 = new THREE.Quaternion().setFromAxisAngle( yAxis, Math.PI);
+var qFinal3 = new THREE.Quaternion().setFromAxisAngle( yAxis, Math.PI*2);
+var positionValues3 = [ -18.5, 0.5, -72];
+var positionTrack3 = new THREE.KeyframeTrack('.position', times3, positionValues3 ,THREE.InterpolateSmooth);
+var quaternionKF3 = new THREE.QuaternionKeyframeTrack( '.quaternion', [ 0, 2, 4 ], [  qInitial2.x, qInitial2.y, qInitial2.z, qInitial2.w, qFinal2.x, qFinal2.y, qFinal2.z, qFinal2.w, qFinal3.x, qFinal3.y, qFinal3.z, qFinal3.w ] );
+
+var radarAnimation = new THREE.AnimationClip('radar', -1 ,[positionTrack3, quaternionKF3], THREE.NormalBlending); //,scaleTrack
+
+
+
+const track = new THREE.ColorKeyframeTrack(
+  '.material.color',
+  [0, 1],
+  [1, 0, 0, 0, 0, 0]
+);
+const lightAnimation = new THREE.AnimationClip('color', undefined, [track]);
 
 // Load a gltf resource
 loader.load(
@@ -189,7 +236,7 @@ loader.load(
   } );*/
 
   var model = gltf.scene;
-  var newMaterial = new THREE.MeshStandardMaterial ( {color: scheme.main, side: THREE.DoubleSide, roughness: 0.3, metalness: 0});
+  var newMaterial = new THREE.MeshStandardMaterial ( {color: scheme.main, side: THREE.DoubleSide, roughness: 1, metalness: 0});
   model.traverse ( (o) => {
       if (o.isMesh) {
         o.material = newMaterial;
@@ -200,7 +247,7 @@ loader.load(
     //if no animation is defined uncomment to set position
     gltf.scene.position.set(22, -13.5, -35)
     gltf.scene.receiveShadow = true;
-
+    gltf.scene.castShadow = false;
     scene.add( gltf.scene );
   
     // Subscribe to scroll events -- CANNOT BE COMBINED WITH ANIMATIONS
@@ -251,6 +298,8 @@ loader.load(
   });
 
     gltf.scene.position.set(22, -13.5, -35)
+    gltf.scene.receiveShadow = true;
+    gltf.scene.castShadow = true;
     scene.add( gltf.scene );
 
 	},
@@ -279,14 +328,15 @@ loader.load(
 	
 );
 
+// Load a gltf resource
 loader.load(
 	// resource URL
-	'statics/chess/scene.gltf',
+	'statics/antenna2/scene.gltf',
 
 	function ( gltf ) {
 
   var model = gltf.scene;
-  var newMaterial = new THREE.MeshStandardMaterial ( {color: 0xa271a2, side: THREE.DoubleSide, roughness: 0, metalness: 0});
+  var newMaterial = new THREE.MeshStandardMaterial ( {color: scheme.third, side: THREE.DoubleSide, roughness: 0, metalness: 0});
   model.traverse ( (o) => {
       if (o.isMesh) {
         o.material = newMaterial;
@@ -299,6 +349,144 @@ loader.load(
 	},
 	
 );
+
+// Load a gltf resource
+loader.load(
+	// resource URL
+	'statics/antennalight/scene.gltf',
+
+	function ( gltf ) {
+
+  var model = gltf.scene;
+  var newMaterial = new THREE.MeshStandardMaterial ( {color: "red", emissive: "red", emissiveIntensity:1, roughness: 0, transparent: true, opacity: 0.8, transmission: 5});
+  model.traverse ( (o) => {
+      if (o.isMesh) {
+        o.material = newMaterial;
+      }
+  });
+
+      // Add animation to scene
+      gltf.animations.push(lightAnimation)
+
+      gltf.animations.forEach( ( clip ) => {
+            
+        mixer.clipAction( clip, gltf.scene ).setLoop(THREE.LoopRepeat);
+        mixer.clipAction( clip, gltf.scene ).play();
+        
+      } );
+
+    gltf.scene.position.set(22, -13.5, -35)
+    scene.add( gltf.scene );
+
+	},
+	
+);
+
+
+// Load a gltf resource
+loader.load(
+	// resource URL
+	'statics/gasbottles/scene.gltf',
+
+	function ( gltf ) {
+
+  var model = gltf.scene;
+  var newMaterial = new THREE.MeshStandardMaterial ( {color: scheme.fourth, roughness: 1, side: THREE.DoubleSide});
+  model.traverse ( (o) => {
+      if (o.isMesh) {
+        o.material = newMaterial;
+      }
+  });
+
+    gltf.scene.position.set(22, -13.5, -35)
+    scene.add( gltf.scene );
+
+	},
+	
+);
+
+
+// Load a gltf resource
+loader.load(
+	// resource URL
+	'statics/box/scene.gltf',
+
+	function ( gltf ) {
+
+  var model = gltf.scene;
+  var newMaterial = new THREE.MeshStandardMaterial ( {color: scheme.third, roughness: 0, transparent: true, opacity: 0.99});
+  model.traverse ( (o) => {
+      if (o.isMesh) {
+        o.material = newMaterial;
+      }
+  });
+
+    gltf.scene.position.set(22, -13.5, -35)
+    scene.add( gltf.scene );
+
+	},
+	
+);
+
+// Load a gltf resource
+loader.load(
+	// resource URL
+	'statics/radarbase/scene.gltf',
+
+	function ( gltf ) {
+
+  var model = gltf.scene;
+  var newMaterial = new THREE.MeshStandardMaterial ( {color: scheme.secondary, side: THREE.DoubleSide, roughness: 1});
+  model.traverse ( (o) => {
+      if (o.isMesh) {
+        o.material = newMaterial;
+      }
+  });
+    gltf.scene.position.set(22, -13.5, -35)
+    gltf.scene.receiveShadow = true;
+    gltf.scene.castShadow = true;
+    scene.add( gltf.scene );
+
+	},
+	
+);
+
+
+// Load a gltf resource
+loader.load(
+	// resource URL
+	'statics/radarshield/scene.gltf',
+
+	function ( gltf ) {
+  var model = gltf.scene;
+  var newMaterial = new THREE.MeshStandardMaterial ( {color: "white", roughness: 1, metalness: 0.3});
+  model.traverse ( (o) => {
+      if (o.isMesh) {
+        o.material = newMaterial;
+      }
+  });
+
+    // Add animation to scene
+    gltf.animations.push(radarAnimation)
+
+    gltf.animations.forEach( ( clip ) => {
+          
+      mixer.clipAction( clip, gltf.scene ).setLoop(THREE.LoopRepeat);
+      mixer.clipAction( clip, gltf.scene ).play();
+      
+    } );
+
+  //gltf.scene.position.set(-18.5, 0.5, -72)
+  gltf.scene.receiveShadow = true;
+  gltf.scene.castShadow = true;
+  scene.add( gltf.scene );
+	},
+);
+
+
+
+
+
 
 loader.load(
 	// resource URL
@@ -313,13 +501,16 @@ loader.load(
         o.material = newMaterial;
       }
   });
-
+    gltf.scene.receiveShadow = true;
+    gltf.scene.castShadow = true;
     gltf.scene.position.set(22, -13.5, -35)
     scene.add( gltf.scene );
 
 	},
 	
 );
+
+
 
 
 // Load a gltf resource
@@ -358,6 +549,9 @@ loader.load(
           o.material = newMaterial;
         }
     });
+
+    gltf.scene.receiveShadow = true;
+    gltf.scene.castShadow = true;
   
     // Subscribe to scroll events -- CANNOT BE COMBINED WITH ANIMATIONS
     window.addEventListener('scroll', () => {
@@ -366,18 +560,18 @@ loader.load(
       // Calculate a progress value between 0 and 1 based on your desired range
       const progress = Math.min(Math.max(scrollY / 10000, 0), 1)
 
-      // Use the progress value to manipulate some properties of your model
-      gltf.scene.position.y = (progress * 963 *(progress * 5)) -13 // Move up and down
-      gltf.scene.position.x = (progress * 2) + 22 // Move up and down
-      gltf.scene.rotation.y = progress * Math.PI // Rotate around z-axis
+      // Use the progress value to manipulate some properties of the model
+      gltf.scene.position.y = (progress * 963 *(progress * 5)) -13 
+      gltf.scene.position.x = (progress * 2) + 22 
+      gltf.scene.rotation.y = progress * Math.PI 
 
-      pointLight.position.y = (progress * 963 *(progress * 5))  -15 // Move up and down
-      pointLight.position.x = (progress * 2) + 22 // Move up and down
-      pointLight.intensity = progress * 3 + 0.5
+      rocketEngineLight.position.y = (progress * 963 *(progress * 5))  -15 
+      rocketEngineLight.position.x = (progress * 2) + 22 
+      rocketEngineLight.intensity = progress * 3 + 0.5
 
-      pointLight3.position.y = (progress * 963 *(progress * 5)) + 5// Move up and down
-      pointLight3.position.x = (progress * 2) + 20 // Move up and down
-      pointLight3.intensity = progress * 2
+      rocketTopLight.position.y = (progress * 963 *(progress * 5)) + 5
+      rocketTopLight.position.x = (progress * 2) + 20 
+      rocketTopLight.intensity = progress
       
 
       if (progress > 0.001){
@@ -414,26 +608,22 @@ loader.load(
 	'statics/satellite/scene.gltf',
 	// called when the resource is loaded
 	function ( gltf ) {
-    
-
-    
+ 
     // Add animation to scene
-    gltf.animations.push(clip2)
-
-		// Create an AnimationMixer instance
-		mixer = new THREE.AnimationMixer( gltf.scene );
+    gltf.animations.push(satelliteAnimation
+    )
 
     // Play the action
     gltf.animations.forEach( ( clip ) => {
           
-    mixer.clipAction( clip ).setLoop(THREE.LoopRepeat);
-    mixer.clipAction( clip ).play();
+    mixer.clipAction( clip, gltf.scene ).setLoop(THREE.LoopRepeat);
+    mixer.clipAction( clip, gltf.scene ).play();
     
   } );
   
     //if no animation is defined uncomment to set position
     gltf.scene.position.set(22, 30, -40)
-    gltf.scene.rotation.y = 10
+    //gltf.scene.rotation.y = 10
 
     scene.add( gltf.scene );
   
@@ -558,84 +748,64 @@ loader.load('statics/untitled.glb', (object) => {
 */
 
 
-// Lights
-
-// Create an ambient light
+// General lightning
 const ambientLight = new THREE.AmbientLight(0xffffff)
-ambientLight.intensity = 0.3;
-// Add it to the scene
+ambientLight.intensity = 0.1;
 scene.add(ambientLight)
 
-// Create a directional light
-//const directionalLight = new THREE.DirectionalLight(0x42f5e3)
-// Set its position
-//directionalLight.position.set(10, 50, 10)
-// Enable shadows
-//directionalLight.castShadow = true
-// Add it to the scene
-//scene.add(directionalLight)
+const directionalLight = new THREE.DirectionalLight("white", 0.4)
+// Set its position and intensity
+directionalLight.position.set(-100, 30, -20)
+//directionalLight.distance = 300
+directionalLight.castShadow = true
+directionalLight.shadow.mapSize.width = 1048;
+directionalLight.shadow.mapSize.height = 1048;
+directionalLight.shadow.camera.near = 0.5;
+directionalLight.shadow.camera.far = 700;
+directionalLight.shadow.camera.rotateY(120);
+scene.add(directionalLight)
+//const helper = new THREE.CameraHelper( directionalLight.shadow.camera );
+//scene.add( helper );
 
-// Create a point light
-const pointLight = new THREE.PointLight(0x3244a8)
-// Set its position
-pointLight.position.set(22, -17, -35)
-pointLight.intensity = 0.5
-// Enable shadows
-pointLight.castShadow = true
-// Add it to the scene
-scene.add(pointLight)
-
-// Create a point light
-const pointLight3 = new THREE.PointLight(0x6699ff)
-// Set its position
-pointLight3.position.set(0, 5, -20)
-pointLight3.intensity = 0
-// Enable shadows
-pointLight3.castShadow = true
-// Add it to the scene
-scene.add(pointLight3)
-
-// Create a point light
 const pointLight2 = new THREE.PointLight("orange")
-// Set its position
 pointLight2.position.set(14, -9, -22)
-pointLight2.intensity = 0.2
-// Enable shadows
-pointLight2.shadow = true
-// Add it to the scene
-//scene.add(pointLight2)
+pointLight2.intensity = 0.1
+scene.add(pointLight2)
 
+const pointLight3 = new THREE.PointLight("red");
+pointLight3.position.set(0, 8, -85);
+pointLight3.intensity = 1;
+pointLight3.distance = 35;
+scene.add(pointLight3);
 
-// Create a point light
 const pointLight4 = new THREE.PointLight("white")
-// Set its position
 pointLight4.position.set(14, 12, -22)
 pointLight4.intensity = 0.2
-// Enable shadows
-pointLight4.shadow = true
-// Add it to the scene
 scene.add(pointLight4)
 
-// Create a directional light
-//const directionalLight3 = new THREE.DirectionalLight(0xffffff)
-// Set its position
-//directionalLight3.position.set(10, -10, 100)
-// Enable shadows
-//directionalLight3.castShadow = true
-// Add it to the scene
-//scene.add(directionalLight3)
-
-
-// Create a hemisphere light
 const hemisphereLight = new THREE.HemisphereLight(0xffffff, "lightblue")
 hemisphereLight.intensity = 0.4
-// Add it to the scene
 scene.add(hemisphereLight)
 
-// Helpers
 
-const lightHelper = new THREE.PointLightHelper(pointLight)
-const lightHelper2 = new THREE.PointLightHelper(pointLight2)
+// Rocket lightning
+const rocketEngineLight = new THREE.PointLight(0x3244a8)
+rocketEngineLight.position.set(22, -17, -35)
+rocketEngineLight.intensity = 0.5
+rocketEngineLight.castShadow = true
+scene.add(rocketEngineLight)
+
+const rocketTopLight = new THREE.PointLight(0x6699ff)
+rocketTopLight.position.set(0, 5, -20)
+rocketTopLight.intensity = 0
+rocketTopLight.castShadow = true
+scene.add(rocketTopLight)
+
+
+
+// Helpers
+const lightHelper = new THREE.PointLightHelper(pointLight3)
+const lightHelper2 = new THREE.PointLightHelper(directionalLight)
 const gridHelper = new THREE.GridHelper(200, 50);
 //scene.add(lightHelper, lightHelper2)
 

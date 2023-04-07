@@ -79,61 +79,61 @@
         {
             "bufferView" : 0,
             "componentType" : 5126,
-            "count" : 2226,
+            "count" : 2214,
             "max" : [
                 205.31170654296875,
-                237.15464782714844,
+                244.32005310058594,
                 -75.89369201660156
             ],
             "min" : [
-                112.85226440429688,
-                186.39073181152344,
-                -219.43118286132812
+                89.59618377685547,
+                188.88235473632812,
+                -191.32058715820312
             ],
             "type" : "VEC3"
         },
         {
             "bufferView" : 1,
             "componentType" : 5126,
-            "count" : 2226,
+            "count" : 2214,
             "type" : "VEC2"
         },
         {
             "bufferView" : 2,
             "componentType" : 5126,
-            "count" : 2226,
+            "count" : 2214,
             "type" : "VEC3"
         },
         {
             "bufferView" : 3,
             "componentType" : 5123,
-            "count" : 4404,
+            "count" : 4386,
             "type" : "SCALAR"
         }
     ],
     "bufferViews" : [
         {
             "buffer" : 0,
-            "byteLength" : 26712,
+            "byteLength" : 26568,
             "byteOffset" : 0,
             "target" : 34962
         },
         {
             "buffer" : 0,
-            "byteLength" : 17808,
-            "byteOffset" : 26712,
+            "byteLength" : 17712,
+            "byteOffset" : 26568,
             "target" : 34962
         },
         {
             "buffer" : 0,
-            "byteLength" : 26712,
-            "byteOffset" : 44520,
+            "byteLength" : 26568,
+            "byteOffset" : 44280,
             "target" : 34962
         },
         {
             "buffer" : 0,
-            "byteLength" : 8808,
-            "byteOffset" : 71232,
+            "byteLength" : 8772,
+            "byteOffset" : 70848,
             "target" : 34963
         }
     ],
@@ -145,7 +145,7 @@
     ],
     "buffers" : [
         {
-            "byteLength" : 80040,
+            "byteLength" : 79620,
             "uri" : "scene.bin"
         }
     ]
