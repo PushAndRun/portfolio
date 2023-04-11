@@ -10,6 +10,8 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 
+import { importObjects } from '/objectDefinitions.js'
+
 import ParticleSystem, {
   Body,
   Color,
@@ -104,440 +106,35 @@ const scheme = {
   fourth: 0x408E91
   }
 
+
+
+//Set up the world  
 function init() {
 
-// Create an array of times for the keyframes (in seconds)
-var times = [0, 0.2, 1];
+importObjects.forEach((object) => {
 
-// Create an array of values for the position.y track (in meters)
-var positionValues = [ 0, 0, -5, 0, 0.75, -5, 0, 0, -5 ];
+  // load the object from the given url with the paramters from the object definition
+  loader.load('statics/' + object.url + '/scene.gltf', (gltf) => {object.importFunction(gltf, scene, mixer)}),
 
-// Create an array of values for the scale.x track (no unit)
-var scaleValues = [ 1, 1, 1, 2, 2, 2, 1, 1, 1 ];
-
-
-// Create a position.y track with linear interpolation
-var positionTrack = new THREE.KeyframeTrack('.position', times ,positionValues ,THREE.InterpolateSmooth);
-
-// Create a scale.x track with smooth interpolation
-//var scaleTrack = new THREE.KeyframeTrack('.scale', times ,scaleValues ,THREE.InterpolateSmooth);
-
-
-// Create an animation clip with all the tracks and a name and duration
-var clip1 = new THREE.AnimationClip('Jump', -1 ,[positionTrack ]); //,scaleTrack
-
-// POSITION - attribute, timings, positions (x, y, z)
-//var positionKF = new THREE.VectorKeyframeTrack( '.position', [ 0, 0.5, 2 ], [ 0, 20, -150, 0, 40, -150, 0, 20, -150 ] );
-
-// SCALE
-//var scaleKF = new THREE.VectorKeyframeTrack( '.scale', [ 0, 1, 2 ], [ 1, 1, 1, 2, 2, 2, 1, 1, 1 ] );
-
-// ROTATION
-// Rotation should be performed using quaternions, using a QuaternionKeyframeTrack
-// Interpolating Euler angles (.rotation property) can be problematic and is currently not supported
-
-// set up rotation about x axis
-//var xAxis = new THREE.Vector3( 1, 0, 0 );
-//var qInitial = new THREE.Quaternion().setFromAxisAngle( xAxis, 0 );
-//var qFinal = new THREE.Quaternion().setFromAxisAngle( xAxis, Math.PI );
-//var quaternionKF = new THREE.QuaternionKeyframeTrack( '.quaternion', [ 0, 1, 2 ], [ qInitial.x, qInitial.y, qInitial.z, qInitial.w, qFinal.x, qFinal.y, qFinal.z, qFinal.w, qInitial.x, qInitial.y, qInitial.z, qInitial.w ] );
-
-//Satellite animation
-// Create an array of times for the keyframes (in seconds)
-var times2 = [0, 15];
-
-// Create an array of values for the position.y track (in meters)
-var positionValues2 = [ -30, -100, -100, 150, 150, -40 ];
-
-// Create a position.x track with linear interpolation
-var positionTrack2 = new THREE.KeyframeTrack('.position', times2 ,positionValues2 ,THREE.InterpolateSmooth);
-
-// set up rotation about x axis
-var xAxis = new THREE.Vector3( 0.5, 0, 0 );
-var qInitial = new THREE.Quaternion().setFromAxisAngle( xAxis, 0 );
-var qFinal = new THREE.Quaternion().setFromAxisAngle( xAxis, Math.PI );
-var quaternionKF2 = new THREE.QuaternionKeyframeTrack( '.quaternion', [ 0, 10, 15 ], [ qInitial.x, qInitial.y, qInitial.z, qInitial.w, qFinal.x, qFinal.y, qFinal.z, qFinal.w, qInitial.x, qInitial.y, qInitial.z, qInitial.w ] );
-
-// Create an animation clip with all the tracks and a name and duration
-var satelliteAnimation = new THREE.AnimationClip('satellite', -1 ,[positionTrack2, quaternionKF2]); //,scaleTrack
-
-// SCALE
-//var scaleKF = new THREE.VectorKeyframeTrack( '.scale', [ 0, 1, 2 ], [ 1, 1, 1, 2, 2, 2, 1, 1, 1 ] );
-
-// ROTATION
-// Rotation should be performed using quaternions, using a QuaternionKeyframeTrack
-// Interpolating Euler angles (.rotation property) can be problematic and is currently not supported
-
-
-// COLOR
-//var colorKF = new THREE.ColorKeyframeTrack( '.material.color', [ 0, 1, 2 ], [ 1, 0, 0, 0, 1, 0, 0, 0, 1 ], THREE.InterpolateDiscrete );
-
-// OPACITY
-//var opacityKF = new THREE.NumberKeyframeTrack( '.material.opacity', [ 0, 1, 2 ], [ 1, 0, 1 ] );
-
-// create an animation sequence with the tracks
-// If a negative time value is passed, the duration will be calculated from the times of the passed tracks array
-//var clip1 = new THREE.AnimationClip( 'Action', 3, [  positionKF ] ); //add required KFs: quaternionKF, colorKF, opacityKF, scaleKF,
-
-
-// POSITION - attribute, timings, positions (x, y, z)
-//var positionKF = new THREE.VectorKeyframeTrack( '.position', [ 0, 0.5, 2 ], [ 0, 20, -150, 0, 40, -150, 0, 20, -150 ] );
-
-// SCALE
-//var scaleKF = new THREE.VectorKeyframeTrack( '.scale', [ 0, 1, 2 ], [ 1, 1, 1, 2, 2, 2, 1, 1, 1 ] );
-
-// ROTATION
-// Rotation should be performed using quaternions, using a QuaternionKeyframeTrack
-// Interpolating Euler angles (.rotation property) can be problematic and is currently not supported
-
-// set up rotation about x axis
-var times3 = [0];
-var yAxis = new THREE.Vector3( 0, 1, 0 );
-var qInitial2 = new THREE.Quaternion().setFromAxisAngle( yAxis, 0 );
-var qFinal2 = new THREE.Quaternion().setFromAxisAngle( yAxis, Math.PI);
-var qFinal3 = new THREE.Quaternion().setFromAxisAngle( yAxis, Math.PI*2);
-var positionValues3 = [ -18.5, 0.5, -72];
-var positionTrack3 = new THREE.KeyframeTrack('.position', times3, positionValues3 ,THREE.InterpolateSmooth);
-var quaternionKF3 = new THREE.QuaternionKeyframeTrack( '.quaternion', [ 0, 2, 4 ], [  qInitial2.x, qInitial2.y, qInitial2.z, qInitial2.w, qFinal2.x, qFinal2.y, qFinal2.z, qFinal2.w, qFinal3.x, qFinal3.y, qFinal3.z, qFinal3.w ] );
-
-var radarAnimation = new THREE.AnimationClip('radar', -1 ,[positionTrack3, quaternionKF3], THREE.NormalBlending); //,scaleTrack
-
-
-
-const track = new THREE.ColorKeyframeTrack(
-  '.material.color',
-  [0, 1],
-  [1, 0, 0, 0, 0, 0]
-);
-const lightAnimation = new THREE.AnimationClip('color', undefined, [track]);
-
-// Load a gltf resource
-loader.load(
-	// resource URL
-	'statics/base/scene.gltf',
-	// called when the resource is loaded
-	function ( gltf ) {
-    /*
-    gltf.scene.position.y = -1
-
-    
-    // Add animation to scene
-    gltf.animations.push(clip1)
-
-		// Create an AnimationMixer instance
-		mixer = new THREE.AnimationMixer( gltf.scene );
-
-    // Play the action
-    gltf.animations.forEach( ( clip ) => {
-          
-    mixer.clipAction( clip ).setLoop(THREE.LoopRepeat);
-    mixer.clipAction( clip ).play();
-    
-  } );*/
-
-  var model = gltf.scene;
-  var newMaterial = new THREE.MeshStandardMaterial ( {color: scheme.main, side: THREE.DoubleSide, roughness: 1, metalness: 0});
-  model.traverse ( (o) => {
-      if (o.isMesh) {
-        o.material = newMaterial;
-      }
-  });
-
-  
-    //if no animation is defined uncomment to set position
-    gltf.scene.position.set(22, -13.5, -35)
-    gltf.scene.receiveShadow = true;
-    gltf.scene.castShadow = false;
-    scene.add( gltf.scene );
-  
-    // Subscribe to scroll events -- CANNOT BE COMBINED WITH ANIMATIONS
-    /*window.addEventListener('scroll', () => {
-      // Get the scroll position
-      const scrollY = window.scrollY
-      // Calculate a progress value between 0 and 1 based on your desired range
-      const progress = Math.min(Math.max(scrollY / 10000, 0), 1)
-      // Use the progress value to manipulate some properties of your model
-      gltf.scene.position.x = progress * 50 // Move up and down
-      gltf.scene.position.y = progress * 30 // Move up and down
-      gltf.scene.rotation.z = progress * Math.PI * 8 // Rotate around z-axis
-      gltf.scene.rotation.y = progress * Math.PI * 8 // Rotate around z-axis
-      renderer.render(scene, camera)
-    })
-
-*/
-
-	},
-	// called while loading is progressing
-	function ( xhr ) {
-
+  // called when loading is successful
+  function ( xhr ) {
 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-
 	},
+
 	// called when loading has errors
 	function ( error ) {
-
 		console.log( 'An error happened' );
-
 	}
-);
+
+})
 
 
-// Load a gltf resource
-loader.load(
-	// resource URL
-	'statics/crystal/scene.gltf',
-
-	function ( gltf ) {
-
-  var model = gltf.scene;
-  var newMaterial = new THREE.MeshStandardMaterial ( {color: scheme.fourth, roughness: 0, transparent: true, opacity: 0.99});
-  model.traverse ( (o) => {
-      if (o.isMesh) {
-        o.material = newMaterial;
-      }
-  });
-
-    gltf.scene.position.set(22, -13.5, -35)
-    gltf.scene.receiveShadow = true;
-    gltf.scene.castShadow = true;
-    scene.add( gltf.scene );
-
-	},
-	
-);
-
-// Load a gltf resource
-loader.load(
-	// resource URL
-	'statics/antenna/scene.gltf',
-
-	function ( gltf ) {
-
-  var model = gltf.scene;
-  var newMaterial = new THREE.MeshStandardMaterial ( {color: scheme.third, side: THREE.DoubleSide, roughness: 0, metalness: 0});
-  model.traverse ( (o) => {
-      if (o.isMesh) {
-        o.material = newMaterial;
-      }
-  });
-
-    gltf.scene.position.set(22, -13.5, -35)
-    scene.add( gltf.scene );
-
-	},
-	
-);
-
-// Load a gltf resource
-loader.load(
-	// resource URL
-	'statics/antenna2/scene.gltf',
-
-	function ( gltf ) {
-
-  var model = gltf.scene;
-  var newMaterial = new THREE.MeshStandardMaterial ( {color: scheme.third, side: THREE.DoubleSide, roughness: 0, metalness: 0});
-  model.traverse ( (o) => {
-      if (o.isMesh) {
-        o.material = newMaterial;
-      }
-  });
-
-    gltf.scene.position.set(22, -13.5, -35)
-    scene.add( gltf.scene );
-
-	},
-	
-);
-
-// Load a gltf resource
-loader.load(
-	// resource URL
-	'statics/antennalight/scene.gltf',
-
-	function ( gltf ) {
-
-  var model = gltf.scene;
-  var newMaterial = new THREE.MeshStandardMaterial ( {color: "red", emissive: "red", emissiveIntensity:1, roughness: 0, transparent: true, opacity: 0.8, transmission: 5});
-  model.traverse ( (o) => {
-      if (o.isMesh) {
-        o.material = newMaterial;
-      }
-  });
-
-      // Add animation to scene
-      gltf.animations.push(lightAnimation)
-
-      gltf.animations.forEach( ( clip ) => {
-            
-        mixer.clipAction( clip, gltf.scene ).setLoop(THREE.LoopRepeat);
-        mixer.clipAction( clip, gltf.scene ).play();
-        
-      } );
-
-    gltf.scene.position.set(22, -13.5, -35)
-    scene.add( gltf.scene );
-
-	},
-	
-);
-
-
-// Load a gltf resource
-loader.load(
-	// resource URL
-	'statics/gasbottles/scene.gltf',
-
-	function ( gltf ) {
-
-  var model = gltf.scene;
-  var newMaterial = new THREE.MeshStandardMaterial ( {color: scheme.fourth, roughness: 1, side: THREE.DoubleSide});
-  model.traverse ( (o) => {
-      if (o.isMesh) {
-        o.material = newMaterial;
-      }
-  });
-
-    gltf.scene.position.set(22, -13.5, -35)
-    scene.add( gltf.scene );
-
-	},
-	
-);
-
-
-// Load a gltf resource
-loader.load(
-	// resource URL
-	'statics/box/scene.gltf',
-
-	function ( gltf ) {
-
-  var model = gltf.scene;
-  var newMaterial = new THREE.MeshStandardMaterial ( {color: scheme.third, roughness: 0, transparent: true, opacity: 0.99});
-  model.traverse ( (o) => {
-      if (o.isMesh) {
-        o.material = newMaterial;
-      }
-  });
-
-    gltf.scene.position.set(22, -13.5, -35)
-    scene.add( gltf.scene );
-
-	},
-	
-);
-
-// Load a gltf resource
-loader.load(
-	// resource URL
-	'statics/radarbase/scene.gltf',
-
-	function ( gltf ) {
-
-  var model = gltf.scene;
-  var newMaterial = new THREE.MeshStandardMaterial ( {color: scheme.secondary, side: THREE.DoubleSide, roughness: 1});
-  model.traverse ( (o) => {
-      if (o.isMesh) {
-        o.material = newMaterial;
-      }
-  });
-    gltf.scene.position.set(22, -13.5, -35)
-    gltf.scene.receiveShadow = true;
-    gltf.scene.castShadow = true;
-    scene.add( gltf.scene );
-
-	},
-	
-);
-
-
-// Load a gltf resource
-loader.load(
-	// resource URL
-	'statics/radarshield/scene.gltf',
-
-	function ( gltf ) {
-  var model = gltf.scene;
-  var newMaterial = new THREE.MeshStandardMaterial ( {color: "white", roughness: 1, metalness: 0.3});
-  model.traverse ( (o) => {
-      if (o.isMesh) {
-        o.material = newMaterial;
-      }
-  });
-
-    // Add animation to scene
-    gltf.animations.push(radarAnimation)
-
-    gltf.animations.forEach( ( clip ) => {
-          
-      mixer.clipAction( clip, gltf.scene ).setLoop(THREE.LoopRepeat);
-      mixer.clipAction( clip, gltf.scene ).play();
-      
-    } );
-
-  //gltf.scene.position.set(-18.5, 0.5, -72)
-  gltf.scene.receiveShadow = true;
-  gltf.scene.castShadow = true;
-  scene.add( gltf.scene );
-	},
-);
-
-
-
-
-
-
-loader.load(
-	// resource URL
-	'statics/house/scene.gltf',
-
-	function ( gltf ) {
-
-  var model = gltf.scene;
-  var newMaterial = new THREE.MeshStandardMaterial ( {color: scheme.secondary, roughness: 0.8, metalness: 0});
-  model.traverse ( (o) => {
-      if (o.isMesh) {
-        o.material = newMaterial;
-      }
-  });
-    gltf.scene.receiveShadow = true;
-    gltf.scene.castShadow = true;
-    gltf.scene.position.set(22, -13.5, -35)
-    scene.add( gltf.scene );
-
-	},
-	
-);
-
-
-
-
-// Load a gltf resource
+// Load the rocket with some special logic for scroll events 
 loader.load(
 	// resource URL
 	'statics/rocket/scene.gltf',
 	// called when the resource is loaded
 	function ( gltf ) {
-    /*
-    gltf.scene.position.y = -1
-
-    
-    // Add animation to scene
-    gltf.animations.push(clip1)
-
-		// Create an AnimationMixer instance
-		mixer = new THREE.AnimationMixer( gltf.scene );
-
-    // Play the action
-    gltf.animations.forEach( ( clip ) => {
-          
-    mixer.clipAction( clip ).setLoop(THREE.LoopRepeat);
-    mixer.clipAction( clip ).play();
-    
-  } );*/
-  
-    //if no animation is defined uncomment to set position
     gltf.scene.position.set(22, -13, -35)
     
     scene.add( gltf.scene );
@@ -553,7 +150,7 @@ loader.load(
     gltf.scene.receiveShadow = true;
     gltf.scene.castShadow = true;
   
-    // Subscribe to scroll events -- CANNOT BE COMBINED WITH ANIMATIONS
+    
     window.addEventListener('scroll', () => {
       // Get the scroll position
       const scrollY = window.scrollY
@@ -582,170 +179,19 @@ loader.load(
 
       renderer.render(scene, camera)
     })
-
-
-
 	},
+
 	// called while loading is progressing
 	function ( xhr ) {
-
 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-
 	},
+
 	// called when loading has errors
 	function ( error ) {
-
 		console.log( 'An error happened' );
-
 	}
 );
 
-
-
-// Load a gltf resource
-loader.load(
-	// resource URL
-	'statics/satellite/scene.gltf',
-	// called when the resource is loaded
-	function ( gltf ) {
- 
-    // Add animation to scene
-    gltf.animations.push(satelliteAnimation
-    )
-
-    // Play the action
-    gltf.animations.forEach( ( clip ) => {
-          
-    mixer.clipAction( clip, gltf.scene ).setLoop(THREE.LoopRepeat);
-    mixer.clipAction( clip, gltf.scene ).play();
-    
-  } );
-  
-    //if no animation is defined uncomment to set position
-    gltf.scene.position.set(22, 30, -40)
-    //gltf.scene.rotation.y = 10
-
-    scene.add( gltf.scene );
-  
-    // Subscribe to scroll events -- CANNOT BE COMBINED WITH ANIMATIONS
-   /* window.addEventListener('scroll', () => {
-      // Get the scroll position
-      const scrollY = window.scrollY
-      // Calculate a progress value between 0 and 1 based on your desired range
-      const progress = Math.min(Math.max(scrollY / 10000, 0), 1)
-      // Use the progress value to manipulate some properties of your model
-      gltf.scene.position.y = (progress * 963 *(progress * 5)) -13 // Move up and down
-      gltf.scene.position.x = (progress * 2) + 22 // Move up and down
-      gltf.scene.rotation.y = progress * Math.PI * 3 // Rotate around z-axis
-      renderer.render(scene, camera)
-    })*/
-
-
-	},
-	// called while loading is progressing
-	function ( xhr ) {
-
-		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-
-	},
-	// called when loading has errors
-	function ( error ) {
-
-		console.log( 'An error happened' );
-
-	}
-);
-
-
-
-
-
-
-/*
-// Load the model
-loader.load('statics/cloud.fbx', (object) => {
-  // Create an animation mixer
-  mixer = new THREE.AnimationMixer(object)
-  object.animations.push(clip1)
-
-  // Traverse the object and find any animation clips
-  object.traverse((child) => {
-    //if (child.isMesh) {
-    //  child.material = material2
-    //}
-
-    if (child.animations && child.animations.length > 0) {
-      // Play each animation clip
-      child.animations.forEach((clip) => {
-        let action = mixer.clipAction(clip);
-        action.setLoop(THREE.LoopRepeat);
-        action.play();
-      })
-    }
-    
-  })
-
-  // Add the object to the scene
-  //Comment out if using animations here frame 0 sets the position
-  //object.position.set(0, 20, -150)
-  scene.add(object)
-
-    // Subscribe to scroll events
-    window.addEventListener('scroll', () => {
-      // Get the scroll position
-      const scrollY = window.scrollY
-      // Calculate a progress value between 0 and 1 based on your desired range
-      const progress = Math.min(Math.max(scrollY / 1000, 0), 1)
-      // Use the progress value to manipulate some properties of your model
-      /*object.position.y = progress * 10 // Move up and down
-      object.rotation.z = progress * Math.PI * 2 // Rotate around z-axis
-      object.scale.setScalar(1 + progress) // Scale up and down
-      if (object.animations && object.animations.length > 0) {
-        // If your model has animations, use the progress value to set the animation time
-        const clip = object.animations[0] // Get the first animation clip
-        const duration = clip.duration // Get its duration in seconds
-        const mixer = new THREE.AnimationMixer(object) // Create an animation mixer for your model
-        const action = mixer.clipAction(clip) // Create an animation action for your clip
-        action.play() // Play the action 
-        action.time = progress * duration // Set its time based on progress 
-      }
-      // Update your renderer on each scroll event 
-      renderer.render(scene, camera)
-    })
-})
-
-
-// Load the model
-loader.load('statics/untitled.glb', (object) => {
-  // Create an animation mixer
-  mixer = new THREE.AnimationMixer(object)
-  object.animations.push(clip1)
-
-  // Traverse the object and find any animation clips
-  object.traverse((child) => {
-
-    
-    
-  })
-
-  // Add the object to the scene
-  //Comment out if using animations here frame 0 sets the position
-  object.position.set(2, 0, -50)
-  scene.add(object)
-
-    // Subscribe to scroll events
-    window.addEventListener('scroll', () => {
-      // Get the scroll position
-      const scrollY = window.scrollY
-      // Calculate a progress value between 0 and 1 based on your desired range
-      const progress = Math.min(Math.max(scrollY / 1000, 0), 1)
-      // Use the progress value to manipulate some properties of your model
-      object.rotation.z += progress * Math.PI * 0.02 // Rotate around z-axis
-      // Update your renderer on each scroll event 
-      renderer.render(scene, camera)
-    })
-})
-*/
 
 
 // General lightning
