@@ -19,185 +19,84 @@ const scheme = {
 }
 
 class ImportObject {
-  constructor(url, importFunction) {
+  constructor(url, material, x, y, z, animation, importFunction) {
     this.url = url;
+    this.material = material;
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.animation = animation;
     this.importFunction = importFunction;
   }
 }
 
-let base = new ImportObject("base", (gltf, scene) => {
-  var model = gltf.scene;
-  var newMaterial = new THREE.MeshStandardMaterial({ color: scheme.main, roughness: 1, metalness: 0 });
-  model.traverse((o) => {
-    if (o.isMesh) {
-      o.material = newMaterial;
-    }
-  });
+let base = new ImportObject(
+  "base", 
+  new THREE.MeshStandardMaterial({ color: scheme.main, roughness: 1, metalness: 0 }),
+  22, -13.5, -35);
 
-  gltf.scene.position.set(22, -13.5, -35)
-  gltf.scene.receiveShadow = true;
-  gltf.scene.castShadow = false;
-  scene.add(gltf.scene);
-});
-
-let antenna = new ImportObject("antenna", (gltf, scene) => {
-  var model = gltf.scene;
-  var newMaterial = new THREE.MeshStandardMaterial({ color: scheme.third, side: THREE.DoubleSide, roughness: 0, metalness: 0 });
-
-  model.traverse((o) => {
-    if (o.isMesh) {
-      o.material = newMaterial;
-    }
-  });
-
-  gltf.scene.position.set(22, -13.5, -35)
-  scene.add(gltf.scene);
-
-});
-
-let crystal = new ImportObject("crystal", (gltf, scene) => {
-  var model = gltf.scene;
-  var newMaterial = new THREE.MeshStandardMaterial({ color: scheme.fourth, roughness: 0, transparent: true, opacity: 0.99 });
-  model.traverse((o) => {
-    if (o.isMesh) {
-      o.material = newMaterial;
-    }
-  });
-
-  gltf.scene.position.set(22, -13.5, -35)
-  gltf.scene.receiveShadow = true;
-  gltf.scene.castShadow = true;
-  scene.add(gltf.scene);
-});
-
-let antenna2 = new ImportObject("antenna2", (gltf, scene) => {
-  var model = gltf.scene;
-  var newMaterial = new THREE.MeshStandardMaterial({ color: scheme.third, side: THREE.DoubleSide, roughness: 0, metalness: 0 });
-  model.traverse((o) => {
-    if (o.isMesh) {
-      o.material = newMaterial;
-    }
-  });
-
-  gltf.scene.position.set(22, -13.5, -35)
-  scene.add(gltf.scene);
-});
+let antenna = new ImportObject(
+  "antenna", 
+  new THREE.MeshStandardMaterial({ color: scheme.third, side: THREE.DoubleSide, roughness: 0, metalness: 0 }),
+  22, -13.5, -35);
 
 
-let antennaLight = new ImportObject("antennalight", (gltf, scene, mixer) => {
-  var model = gltf.scene;
-  var newMaterial = new THREE.MeshStandardMaterial({ color: "red", emissive: "red", emissiveIntensity: 1, roughness: 0, transparent: true, opacity: 0.8 });
-  model.traverse((o) => {
-    if (o.isMesh) {
-      o.material = newMaterial;
-    }
-  });
-
-  gltf.scene.position.set(22, -13.5, -35)
-  scene.add(gltf.scene);
-});
+let crystal = new ImportObject(
+  "crystal", 
+  new THREE.MeshStandardMaterial({ color: scheme.fourth, roughness: 0, transparent: true, opacity: 0.99 }),
+  22, -13.5, -35)
 
 
-let gasBottles = new ImportObject("gasbottles", (gltf, scene) => {
-  var model = gltf.scene;
-  var newMaterial = new THREE.MeshStandardMaterial({ color: scheme.fourth, roughness: 1, side: THREE.DoubleSide });
-  model.traverse((o) => {
-    if (o.isMesh) {
-      o.material = newMaterial;
-    }
-  });
-
-  gltf.scene.position.set(22, -13.5, -35)
-  scene.add(gltf.scene);
-});
-
-let box = new ImportObject("box", (gltf, scene) => {
-  var model = gltf.scene;
-  var newMaterial = new THREE.MeshStandardMaterial({ color: scheme.third, roughness: 0, transparent: true, opacity: 0.99 });
-  model.traverse((o) => {
-    if (o.isMesh) {
-      o.material = newMaterial;
-    }
-  });
-
-  gltf.scene.castShadow = true;
-  gltf.scene.position.set(22, -13.5, -35)
-  scene.add(gltf.scene);
-});
+let antenna2 = new ImportObject(
+  "antenna2", 
+  new THREE.MeshStandardMaterial({ color: scheme.third, side: THREE.DoubleSide, roughness: 0, metalness: 0 }),
+  22, -13.5, -35);
 
 
-let radarBase = new ImportObject("radarbase", (gltf, scene) => {
-  var model = gltf.scene;
-  var newMaterial = new THREE.MeshStandardMaterial({ color: scheme.secondary, side: THREE.DoubleSide, roughness: 1 });
-  model.traverse((o) => {
-    if (o.isMesh) {
-      o.material = newMaterial;
-    }
-  });
-  gltf.scene.position.set(22, -13.5, -35)
-  gltf.scene.receiveShadow = true;
-  gltf.scene.castShadow = true;
-  scene.add(gltf.scene);
-});
+let antennaLight = new ImportObject(
+  "antennalight", 
+  new THREE.MeshStandardMaterial({ color: "red", emissive: "red", emissiveIntensity: 1, roughness: 0, transparent: true, opacity: 0.8 }),
+  22, -13.5, -35);
 
-let radarShield = new ImportObject("radarshield", (gltf, scene, mixer) => {
-  var model = gltf.scene;
-  var newMaterial = new THREE.MeshStandardMaterial({ color: "white", roughness: 0, metalness: 0 });
-  model.traverse((o) => {
-    if (o.isMesh) {
-      o.material = newMaterial;
-    }
-  });
+let gasBottles = new ImportObject(
+  "gasbottles", 
+  new THREE.MeshStandardMaterial({ color: scheme.fourth, roughness: 1, side: THREE.DoubleSide }),
+  22, -13.5, -35);
 
-  // Add animation to scene
-  gltf.animations.push(Animation.radarAnimation)
-
-  gltf.animations.forEach((clip) => {
-
-    mixer.clipAction(clip, gltf.scene).setLoop(THREE.LoopRepeat);
-    mixer.clipAction(clip, gltf.scene).play();
-
-  });
-
-  //gltf.scene.position.set(-18.5, 0.5, -72)
-  gltf.scene.receiveShadow = true;
-  gltf.scene.castShadow = true;
-  scene.add(gltf.scene);
-});
+let box = new ImportObject(
+  "box", 
+  new THREE.MeshStandardMaterial({ color: scheme.third, roughness: 0, transparent: true, opacity: 0.99 }),
+  22, -13.5, -35);
 
 
-let house = new ImportObject("house", (gltf, scene) => {
-  var model = gltf.scene;
-  var newMaterial = new THREE.MeshStandardMaterial({ color: scheme.secondary, roughness: 0.8, metalness: 0 });
-  model.traverse((o) => {
-    if (o.isMesh) {
-      o.material = newMaterial;
-    }
-  });
-  gltf.scene.receiveShadow = true;
-  gltf.scene.castShadow = true;
-  gltf.scene.position.set(22, -13.5, -35)
-  scene.add(gltf.scene);
-});
+
+let radarBase = new ImportObject(
+  "radarbase", 
+  new THREE.MeshStandardMaterial({ color: scheme.secondary, side: THREE.DoubleSide, roughness: 1 }),
+  22, -13.5, -35);
 
 
-let satellite = new ImportObject("satellite", (gltf, scene, mixer) => {
 
-  // Add animation to scene
-  gltf.animations.push(Animation.satelliteAnimation
-  )
+let radarShield = new ImportObject(
+  "radarshield", 
+  new THREE.MeshStandardMaterial({ color: "white", roughness: 0, metalness: 0 }),
+  -18.5, 0.5, -72,
+  Animation.radarAnimation);
 
-  // Play the action
-  gltf.animations.forEach((clip) => {
 
-    mixer.clipAction(clip, gltf.scene).setLoop(THREE.LoopRepeat);
-    mixer.clipAction(clip, gltf.scene).play();
+let house = new ImportObject(
+  "house", 
+  new THREE.MeshStandardMaterial({ color: scheme.secondary, roughness: 0.8, metalness: 0 }),
+  22, -13.5, -35);
 
-  });
 
-  gltf.scene.rotation.y = 10
-  scene.add(gltf.scene);
-});
+let satellite = new ImportObject(
+  "satellite", 
+  undefined,
+  0,0,0,
+  Animation.satelliteAnimation,
+  (gltf) => {gltf.scene.rotation.y = 10}
+  );
 
 
 

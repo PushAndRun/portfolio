@@ -114,7 +114,39 @@ function init() {
 importObjects.forEach((object) => {
 
   // load the object from the given url with the paramters from the object definition
-  loader.load('statics/' + object.url + '/scene.gltf', (gltf) => {object.importFunction(gltf, scene, mixer)}),
+  loader.load('statics/' + object.url + '/scene.gltf', 
+  function ( gltf ) {
+
+    if (object.material != undefined){
+      gltf.scene.traverse ( (o) => {
+          if (o.isMesh) {
+            o.material = object.material;
+          }
+      });
+    }
+
+    scene.add( gltf.scene );
+
+    if(object.animation != undefined){
+
+    gltf.animations.push(object.animation)
+
+      // Play the action
+      gltf.animations.forEach((clip) => {
+      mixer.clipAction(clip, gltf.scene).setLoop(THREE.LoopRepeat);
+      mixer.clipAction(clip, gltf.scene).play();
+      });
+    } else {
+      gltf.scene.position.set(object.x, object.y, object.z)
+    }
+
+    
+
+    if (object.importFunction != undefined) {
+      object.importFunction(gltf);
+    }
+   
+  },
 
   // called when loading is successful
   function ( xhr ) {
@@ -125,8 +157,9 @@ importObjects.forEach((object) => {
 	function ( error ) {
 		console.log( 'An error happened' );
 	}
-
-})
+  );
+  
+});
 
 
 // Load the rocket with some special logic for scroll events 
@@ -177,7 +210,7 @@ loader.load(
         emitter.setPosition({ x: 0, y: -200, z: 350 })
       } 
 
-      renderer.render(scene, camera)
+      //renderer.render(scene, camera)
     })
 	},
 
