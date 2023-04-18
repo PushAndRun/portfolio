@@ -64,7 +64,7 @@ const loader = new GLTFLoader(manager)
       };
 
 
-//Prepare objects for animation
+//Predefine required objects
 let moon
 
 // Create an AnimationMixer instance
@@ -74,22 +74,6 @@ const mixer = new THREE.AnimationMixer( scene );
 // Prepare Nebula
 const system = new ParticleSystem();
 const emitter = new Emitter();
-
-// Set color scheme
-const scheme2 = {
-main: 0xEEECDA,
-secondary: 0xF08A5D,
-third: 0xB83B5E,
-fourth: 0x6A2C70
-}
-
-const scheme = {
-  main: 0xFFF2CC,
-  secondary: 0xBB8082,
-  third: 0x6E7582,
-  fourth: 0x408E91
-  }
-
 
 
 //Set up the world  
