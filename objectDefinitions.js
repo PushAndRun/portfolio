@@ -98,8 +98,42 @@ let satellite = new ImportObject(
   (gltf) => {gltf.scene.rotation.y = 10}
   );
 
+  let rocket = new ImportObject(
+    "rocket", 
+    new THREE.MeshStandardMaterial ( {color: "white", roughness: 0, metalness: 0, side: THREE.DoubleSide}),
+    22, -13, -35,
+    undefined,
+    (gltf, rocketEngineLight, rocketTopLight, emitter) => {
+      window.addEventListener('scroll', () => {
+        // Get the scroll position
+        const scrollY = window.scrollY
+        // Calculate a progress value between 0 and 1 based on your desired range
+        const progress = Math.min(Math.max(scrollY / 10000, 0), 1)
+  
+        // Use the progress value to manipulate some properties of the model
+        gltf.scene.position.y = (progress * 963 *(progress * 5)) -13 
+        gltf.scene.position.x = (progress * 2) + 22 
+        gltf.scene.rotation.y = progress * Math.PI 
+  
+        rocketEngineLight.position.y = (progress * 963 *(progress * 5))  -15 
+        rocketEngineLight.position.x = (progress * 2) + 22 
+        rocketEngineLight.intensity = progress * 3 + 0.5
+  
+        rocketTopLight.position.y = (progress * 963 *(progress * 5)) + 5
+        rocketTopLight.position.x = (progress * 2) + 20 
+        rocketTopLight.intensity = progress
+        
+  
+        if (progress > 0.001){
+        emitter.setPosition({ x: (progress * 2) + 22, y: (progress * 963 *(progress * 5)) -13, z: -35 })
+        } else {
+          emitter.setPosition({ x: 0, y: -200, z: 350 })
+        } 
+  
+        //renderer.render(scene, camera)
+      })}
+    );
 
 
-
-export const importObjects = [base, crystal, antenna, antenna2, antennaLight, gasBottles, box, radarBase, radarShield, house, satellite];
+export const importObjects = [base, crystal, antenna, antenna2, antennaLight, gasBottles, box, radarBase, radarShield, house, satellite, rocket];
 
