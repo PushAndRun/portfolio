@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/portfolio/assets/favicon.63a26457.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tilman's Website</title>
+
+    <script type="module" crossorigin src="/portfolio/assets/index.c288cb4e.js"></script>
+    <link rel="stylesheet" href="/portfolio/assets/index.d7e11925.css">
+  </head>
+  <style>
+      #loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+
+  #loading-screen .spinner {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border-top: 5px solid #fff;
+    border-right: 5px solid transparent;
+    animation: spinner 1s linear infinite;
+  }
+  </style>
+  <body>
+
+    <div id="loading-screen">
+      <div class="spinner"></div>
+    </div>
+
+    <div class="scroll-down" style="z-index: 1000">
+      <img src="/portfolio/assets/arrow.a37942dd.svg" alt="Scroll down arrow" width="100" height="100">
+    </div>
+
+    <script>
+      const scrollDown = document.querySelector('.scroll-down');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > window.innerHeight / 4) {
+          scrollDown.classList.add('hide-scroll-down');
+        } else {
+          scrollDown.classList.remove('hide-scroll-down');
+        }
+      });
+    </script>
+
+  <div class="cover">
+  <h1 style="margin: auto">Sorry, this user experience was build for desktop screens. Please switch to a larger device.</h1>
+  </div>
+
+    <canvas id="bg"></canvas>   
+
+    <main>
+
+
+      <blockquote></blockquote>
+      <blockquote></blockquote>
+      <blockquote></blockquote>
+      <blockquote></blockquote>
+      <blockquote></blockquote>
+      <blockquote></blockquote>
+
+      <section>
+        <h2>📜 Profile</h2>
+        <p>
+          Hi, I am Tilman. I am a Software Engineer based in Berlin and Paris, who is passionate about technology, games and obviously the space!
+        </p>
+
+        <p>
+          I am holding a Bachelor of Science in Business Informatics and am proficient in several programming languages including Go, Java, javaScript, and Python. 
+          I apply my knowledge in the field of web apps, data processing and AI tools that I deploy in the cloud.
+        </p>
+
+      </section>
+
+      <section class="light">
+        <h2>👩🏽‍🚀 Projects</h2>
+        <h3>King of the hill chess engine</h3>
+        <p>
+          King of the hill is a chess variant where the player can win by moving the king into one of the four center fields. NextMagnus is a Java chess AI that plays exactly this variant. 
+          It allows to use different search algorithms to find the best move, utilizes bit boards for accellerated computations on CPU level, as well as caching of examined tree branches. 
+          The chess engine was created as part of a university research project in corporation with two other students. A front end to play against the engine will follow soon.  
+        </p>
+        <p>
+          Check out the <a href="https://github.com/PushAndRun/chessAI">source code</a>.<br> <br> 
+        </p>
+
+        <h3>Corral++</h3>
+        <p>
+          Corral++ is a serverless data processing framework written in Go that allows to execute Map-Reduce queries on large amounts of data. 
+          In this experimental branch of the framework I implemented an advanced logging and collected data to gain deep insights into the impact of certain parameters.
+          In the second step, I focussed on an improvement of the polling process that is required to monitor the progress of the individual map and reduce function invokations.
+          I used the collected data to build ML models that are able to predict the execution time of the function. 
+          These were compared with different linear polling algorithms that I implemented to find the most efficient option that reduces network traffic as well as delays.
+        </p>
+        <p>
+          Check out the <a href="https://github.com/PushAndRun/corral">source code</a> and the <a href="https://github.com/PushAndRun/Prediction">ML models</a><br> <br> 
+        </p>
+
+        <h3>About this page</h3>
+
+        <p>
+          The assets for this page were crafted and animated with ❤️ in Blender. The rest of the magic happens in javaScript utilizing the three.js framework and some additional libraries such as three-nebula to add the special effects.
+        </p>
+        <p>
+          Check out the <a href="https://github.com/PushAndRun/portfolio">source code</a>.
+        </p>
+
+      </section>
+
+      <section>
+        <h2>Contact</h2>
+        <p>
+          Find me on <a href="https://www.linkedin.com/in/tilman-goldboom-bba254134/">LinkedIn</a>
+        </p>
+        <p>
+          Check out my <a href="https://github.com/PushAndRun">GitHub account</a>
+        </p>
+        <p>
+          Send me an <a href="mailto:tgoldboom@gmail.com">E-Mail</a>
+        </p> <br>
+        <a href="https://docs.github.com/de/site-policy/privacy-policies/github-privacy-statement">Privacy</a> 
+        <br>
+        <details class="popover">
+          <summary>Impressum</summary>
+          <div class="popover-content">
+            <h1>Impressum</h1>
+            <p>Angaben gemäß § 5 TMG<br>
+
+            Tilman Goldboom
+            Hildegardstr. 6
+            10715 Berlin
+            Vertreten durch:
+            Tilman Goldboom
+            Kontakt:
+            Telefon: +49-1781696364
+            E-Mail: tgoldboom@gmail.com
+            <br><br>
+            Haftungsausschluss:
+            
+            Haftung für Inhalte
+            
+            Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.
+            <br><br>
+            Haftung für Links:
+            
+            Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.
+            <br><br>
+            Urheberrecht:
+            
+            Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet. Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.
+          </p>
+
+          </div>
+        </details>
+
+      </section>
+      
+      <blockquote>
+        <p>“Looking? Found someone<br> you have, I would say, eh?” - Yoda</p>
+      </blockquote>
+    </main>
+    
+    
+
+
+
+  </body>
+</html>
