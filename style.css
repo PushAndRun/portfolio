@@ -18,11 +18,10 @@ canvas {
 
 
 main {
-  width: 100vw;
   color: white;
   z-index: 99;
   position: absolute;
-  width: 100%;
+  width: 80%;
   margin: 0px auto;
   padding: 120px 0px;
   
@@ -34,6 +33,7 @@ h1, h2, h3, blockquote {
   font-family: elevon, sans-serif;
   font-weight: 700;
   font-style: normal;
+  width: 80%;
 }
 
 canvas {
@@ -46,17 +46,17 @@ canvas {
 
   header {
     background: none;
-    grid-column: 2 / span 5;
+    grid-column: 4 / span 5;
     font-size: 2.5rem;
     padding: 2rem;
     margin-bottom: var(--spacing);
   }
 
   section {
-    grid-column: 2 / 8;
+    grid-column: 4 / 8;
     padding: 1rem;
     background: var(--dark-bg);
-    font-size: 1.25rem;
+    font-size: 1.4rem;
     line-height: 1.5;
     margin-bottom: var(--spacing);
   }
@@ -64,7 +64,7 @@ canvas {
   blockquote {
     margin: 0;
     padding: 0;
-    grid-column: 2 / span 9;
+    grid-column: 4 / span 9;
     margin-bottom: var(--spacing);
   }
 
@@ -73,7 +73,7 @@ canvas {
     background-color: white;
     font-size: 4rem;
     display: inline;
-    line-height: 1;
+    line-height: 1.5;
   }
 
   .left {

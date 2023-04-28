@@ -44,13 +44,32 @@ let antenna = new ImportObject(
 let crystal = new ImportObject(
   "crystal", 
   new THREE.MeshStandardMaterial({ color: scheme.fourth, roughness: 0, transparent: true, opacity: 0.99 }),
-  22, -13.5, -35)
+  22, -13.5, -35);
 
+let name = new ImportObject(
+    "name", 
+    new THREE.MeshStandardMaterial({ color: "white", roughness: 1}),
+    22, -13.5, -35);
 
 let antenna2 = new ImportObject(
   "antenna2", 
   new THREE.MeshStandardMaterial({ color: scheme.third, side: THREE.DoubleSide, roughness: 0, metalness: 0 }),
   22, -13.5, -35);
+
+  let robot = new ImportObject(
+    "robot", 
+    new THREE.MeshStandardMaterial({ color: "white", side: THREE.DoubleSide, roughness: 1, metalness: 0 }),
+    22, -13.5, -35);  
+
+    let robot2 = new ImportObject(
+      "robot2", 
+      new THREE.MeshStandardMaterial({ color: 0x3299CC, side: THREE.DoubleSide, roughness: 1, metalness: 0 }),
+      22, -13.5, -35);  
+
+      let robot3 = new ImportObject(
+        "robot3", 
+        new THREE.MeshStandardMaterial({ color: "gray", side: THREE.DoubleSide, roughness: 1, metalness: 0 }),
+        22, -13.5, -35); 
 
 
 let antennaLight = new ImportObject(
@@ -65,7 +84,7 @@ let gasBottles = new ImportObject(
 
 let box = new ImportObject(
   "box", 
-  new THREE.MeshStandardMaterial({ color: scheme.third, roughness: 0, transparent: true, opacity: 0.99 }),
+  new THREE.MeshStandardMaterial({ color: "gray", roughness: 0.8, side: THREE.DoubleSide}),
   22, -13.5, -35);
 
 
@@ -79,7 +98,7 @@ let radarBase = new ImportObject(
 
 let radarShield = new ImportObject(
   "radarshield", 
-  new THREE.MeshStandardMaterial({ color: "white", roughness: 0, metalness: 0 }),
+  new THREE.MeshStandardMaterial({ color: scheme.secondary, roughness: 1, metalness: 0 }),
   -18.5, 0.5, -72,
   Animation.radarAnimation);
 
@@ -88,6 +107,17 @@ let house = new ImportObject(
   "house", 
   new THREE.MeshStandardMaterial({ color: scheme.secondary, roughness: 0.8, metalness: 0 }),
   22, -13.5, -35);
+
+let tower = new ImportObject(
+    "tower", 
+    new THREE.MeshStandardMaterial({ color: "lightblue", roughness: 0.8, metalness: 0, wireframe: true }),
+    80, 200, -150);  
+
+    let rooke = new ImportObject(
+      "rooke", 
+      new THREE.MeshStandardMaterial({ color: "violet", roughness: 0.8, metalness: 0, wireframe: true }),
+      190, 280, -200);  
+  
 
 
 let satellite = new ImportObject(
@@ -135,5 +165,5 @@ let satellite = new ImportObject(
     );
 
 
-export const importObjects = [base, crystal, antenna, antenna2, antennaLight, gasBottles, box, radarBase, radarShield, house, satellite, rocket];
+export const importObjects = [base, crystal, name, antenna, antenna2, robot, robot2, robot3, antennaLight, gasBottles, box, radarBase, radarShield, house, tower, rooke, satellite, rocket];
 

@@ -2,7 +2,7 @@ import './style.css';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { importObjects } from '/objectDefinitions.js'
-import * as Lights  from '/lights.js'
+import { Lights }  from '/lights.js'
 import dot from '/statics/dot.png';
 
 import ParticleSystem, {
@@ -103,39 +103,34 @@ importObjects.forEach((object) => {
     if(object.animation != undefined){
 
     gltf.animations.push(object.animation)
-      // Play the action
-      gltf.animations.forEach((clip) => {
-      mixer.clipAction(clip, gltf.scene).setLoop(THREE.LoopRepeat);
-      mixer.clipAction(clip, gltf.scene).play();
-      });
     } else {
       gltf.scene.position.set(object.x, object.y, object.z)
     }
     if (object.importFunction != undefined) {
       object.importFunction(gltf, Lights.rocketEngineLight, Lights.rocketTopLight, emitter);
     }
+
+    // Play the action
+    gltf.animations.forEach((clip) => {
+    mixer.clipAction(clip, gltf.scene).setLoop(THREE.LoopRepeat);
+    mixer.clipAction(clip, gltf.scene).play();
+    });
+    
   }
   );  
 });
 
-
 //Add lights to scene
-scene.add(Lights.ambientLight)
-scene.add(Lights.directionalLight)
-scene.add(Lights.pointLight2)
-scene.add(Lights.pointLight3);
-scene.add(Lights.pointLight4)
-scene.add(Lights.hemisphereLight)
-scene.add(Lights.rocketEngineLight)
-scene.add(Lights.rocketTopLight)
+let lights = Object.values(Lights)
+lights.forEach ((light)=>{
+  scene.add(light);
+})
 
 // Helpers
-/*
-const lightHelper = new THREE.PointLightHelper(Lights.pointLight3)
-const lightHelper2 = new THREE.PointLightHelper(Lights.directionalLight)
-const gridHelper = new THREE.GridHelper(200, 50);
-//scene.add(lightHelper, lightHelper2)
-*/
+
+//const lightHelper = new THREE.PointLightHelper(Lights.nameLight)
+//scene.add(lightHelper)
+
 
 // Add stars
 function addStar() {
@@ -166,8 +161,8 @@ moon = new THREE.Mesh(
 
 scene.add(moon);
 moon.position.z = -250;
-moon.position.y = 15;
-moon.position.setX(100);
+moon.position.y = 67;
+moon.position.setX(120);
 
 
 // Init particle system for rocket engine
