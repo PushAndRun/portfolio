@@ -87,7 +87,7 @@ scene.background = spaceTexture;
 importObjects.forEach((object) => {
 
   // load the object from the given url with the paramters from the object definition
-  loader.load('statics/' + object.url + '/scene.gltf', 
+  loader.load('assets/' + object.url + '/scene.gltf', 
   function ( gltf ) {
 
     if (object.material != undefined){
