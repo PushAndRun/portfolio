@@ -80,14 +80,14 @@ const emitter = new Emitter();
 function init() {
 
 // Background
-const spaceTexture = new THREE.TextureLoader().load('space.jpg');
+const spaceTexture = new THREE.TextureLoader().load('./assets/space.jpg');
 scene.background = spaceTexture;
 
 // Load imported gltf objects
 importObjects.forEach((object) => {
 
   // load the object from the given url with the paramters from the object definition
-  loader.load('assets/' + object.url + '/scene.gltf', 
+  loader.load('./assets/' + object.url + '/scene.gltf', 
   function ( gltf ) {
 
     if (object.material != undefined){
@@ -148,8 +148,8 @@ function addStar() {
 Array(500).fill().forEach(addStar);
 
 // Moon
-const moonTexture = new THREE.TextureLoader().load('moon.jpg');
-const normalTexture = new THREE.TextureLoader().load('normal.jpg');
+const moonTexture = new THREE.TextureLoader().load('./assets/moon.jpg');
+const normalTexture = new THREE.TextureLoader().load('./assets/normal.jpg');
 
 moon = new THREE.Mesh(
   new THREE.SphereGeometry(30, 32, 32),

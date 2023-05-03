@@ -20,5 +20,13 @@
     "three": "^0.128.0",
     "three-nebula": "^10.0.3",
     "update": "^0.7.4"
-  }
+  },
+  "files": [
+    "dist",
+    "assets",
+    "main.js",
+    "lights.js",
+    "style.css",
+    "objectDefinition.js"
+  ]
 }
