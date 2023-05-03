@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { importObjects } from '/objectDefinitions.js'
 import { Lights }  from '/lights.js'
-import dot from '/statics/dot.png';
+import dot from './assets/dot.png';
 
 import ParticleSystem, {
   Body,
