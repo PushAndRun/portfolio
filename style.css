@@ -18,7 +18,7 @@ canvas {
 
 
 main {
-  color: white;
+  color: rgb(216, 213, 213);
   z-index: 99;
   position: absolute;
   width: 80%;
@@ -33,7 +33,7 @@ h1, h2, h3, blockquote {
   font-family: elevon, sans-serif;
   font-weight: 700;
   font-style: normal;
-  width: 80%;
+  width: 85%;
 }
 
 canvas {
@@ -146,6 +146,7 @@ canvas {
     transform: translateX(-50%);
     background-color: var(--dark-bg);
     padding: 10px;
+    margin-left: 32px;
     width: 600%;
   }
   
@@ -166,7 +167,28 @@ canvas {
     }
   }
 
+  summary {
+    margin-right: 32px;
+  }
+
   body {
     overflow-y: scroll;
     overflow-x: hidden;
+  }
+
+  .footer {
+      grid-column: 6/8;
+      padding-left: 3rem;
+      padding-right: 3rem;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      background: var(--dark-bg);
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 16px;
+      border-radius: 8px;
+  }
+
+  a {
+    color: rgb(216, 213, 213);
   }
