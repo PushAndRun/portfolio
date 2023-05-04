@@ -36,14 +36,6 @@ h1, h2, h3, blockquote {
   width: 85%;
 }
 
-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-}
-
-
-
   header {
     background: none;
     grid-column: 4 / span 5;
@@ -177,7 +169,7 @@ canvas {
   }
 
   .footer {
-      grid-column: 6/8;
+      grid-column: 5/8;
       padding-left: 3rem;
       padding-right: 3rem;
       padding-top: 1rem;
@@ -185,7 +177,7 @@ canvas {
       background: var(--dark-bg);
       font-size: 1rem;
       line-height: 1.7;
-      margin-bottom: 16px;
+      margin-left: 0px;
       border-radius: 8px;
   }
 

@@ -139,13 +139,13 @@ function addStar() {
   const star = new THREE.Mesh(geometry, material);
   const x = THREE.MathUtils.randFloatSpread(400);
   const y = THREE.MathUtils.randFloatSpread(2000);
-  const z = THREE.MathUtils.randFloatSpread(-100)-10;
+  const z = THREE.MathUtils.randFloatSpread(-100)-100;
 
   star.position.set(x, y, z);
   scene.add(star);
 }
 
-Array(500).fill().forEach(addStar);
+Array(100).fill().forEach(addStar);
 
 // Moon
 const moonTexture = new THREE.TextureLoader().load('./assets/moon.jpg');
