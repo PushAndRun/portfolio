@@ -27,6 +27,7 @@
     "main.js",
     "lights.js",
     "style.css",
-    "objectDefinition.js"
+    "objectDefinition.js",
+    "legalnotice.html"
   ]
 }

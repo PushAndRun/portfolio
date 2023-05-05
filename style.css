@@ -169,16 +169,18 @@ h1, h2, h3, blockquote {
   }
 
   .footer {
-      grid-column: 5/8;
-      padding-left: 3rem;
-      padding-right: 3rem;
+      grid-column: 4/8;
       padding-top: 1rem;
       padding-bottom: 1rem;
-      background: var(--dark-bg);
       font-size: 1rem;
       line-height: 1.7;
       margin-left: 0px;
       border-radius: 8px;
+  }
+
+  .footer-link {
+    margin: auto;
+    padding: 2rem;
   }
 
   a {
