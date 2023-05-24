@@ -4,11 +4,72 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="./style.css">
     <title>Impressum</title>
 
   </head>
-  <body style="background-color: rgb(59, 58, 58)">
+  <style>
+      .footer {
+      grid-column: 4/8;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-left: 0px;
+      border-radius: 8px;
+  }
+
+  :root {
+  --dark-bg: rgba(15, 15, 15, 0.90);
+  --spacing: 280px;
+
+  font-family: brandon-grotesque, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+main {
+  color: rgb(216, 213, 213);
+  z-index: 99;
+  position: absolute;
+  width: 80%;
+  margin: 0px auto;
+  padding: 120px 0px;
+  
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+h1, h2, h3, blockquote {
+  font-family: elevon, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  width: 85%;
+}
+
+  header {
+    background: none;
+    grid-column: 4 / span 5;
+    font-size: 2.5rem;
+    padding: 2rem;
+    margin-bottom: var(--spacing);
+  }
+
+  section {
+    grid-column: 3 / 8;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background: var(--dark-bg);
+    font-size: 1.4rem;
+    line-height: 1.7;
+    margin-bottom: var(--spacing);
+    border-radius: 8px;
+  }
+
+  </style>
+  <body style="background-color: rgb(59, 58, 58)">  
 
 
     <main>
