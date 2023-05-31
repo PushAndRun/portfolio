@@ -113,16 +113,20 @@ let tower = new ImportObject(
     new THREE.MeshStandardMaterial({ color: "lightblue", roughness: 0.8, metalness: 0, wireframe: true }),
     80, 200, -150);  
 
-    let rooke = new ImportObject(
-      "rooke", 
-      new THREE.MeshStandardMaterial({ color: "violet", roughness: 0.8, metalness: 0, wireframe: true }),
-      190, 280, -200);  
+let rooke = new ImportObject(
+  "rooke", 
+  new THREE.MeshStandardMaterial({ color: "violet", roughness: 0.8, metalness: 0, wireframe: true }),
+  190, 280, -200);  
 
-      let graph = new ImportObject(
-        "graph", 
-        new THREE.MeshStandardMaterial({ color: "lightgreen", roughness: 0.8, metalness: 0, wireframe: true }),
-        150, 450, -150);    
-  
+let cloud = new ImportObject(
+  "cloud", 
+  new THREE.MeshStandardMaterial({ color: "lavender", roughness: 0.8, metalness: 0, wireframe: true }),
+  80, 350, -200);    
+
+let cloud2 = new ImportObject(
+    "cloud", 
+    new THREE.MeshStandardMaterial({ color: "lavender", roughness: 0.8, metalness: 0, wireframe: true }),
+    200, 420, -300); 
 
 
 let satellite = new ImportObject(
@@ -170,5 +174,5 @@ let satellite = new ImportObject(
     );
 
 
-export const importObjects = [base, crystal, name, antenna, antenna2, robot, robot2, robot3, antennaLight, gasBottles, box, radarBase, radarShield, house, tower, rooke, satellite, rocket];
+export const importObjects = [base, crystal, name, antenna, antenna2, robot, robot2, robot3, antennaLight, gasBottles, box, radarBase, radarShield, house, tower, rooke, cloud, cloud2, satellite, rocket];
 
