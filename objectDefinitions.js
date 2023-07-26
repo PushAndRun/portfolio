@@ -120,12 +120,12 @@ let rooke = new ImportObject(
 
 let cloud = new ImportObject(
   "cloud", 
-  new THREE.MeshStandardMaterial({ color: "lavender", roughness: 0.8, metalness: 0, wireframe: true }),
+  new THREE.MeshStandardMaterial({ color: "lavender", roughness: 0.8, metalness: 0, wireframe: false, side: THREE.DoubleSide }),
   80, 350, -200);    
 
 let cloud2 = new ImportObject(
     "cloud", 
-    new THREE.MeshStandardMaterial({ color: "lavender", roughness: 0.8, metalness: 0, wireframe: true }),
+    new THREE.MeshStandardMaterial({ color: "lavender", roughness: 0.8, metalness: 0, wireframe: false, side: THREE.DoubleSide }),
     200, 420, -300); 
 
 
